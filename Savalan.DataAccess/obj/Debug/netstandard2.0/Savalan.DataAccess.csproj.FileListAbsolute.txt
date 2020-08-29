@@ -1,0 +1,8 @@
+E:\personal\dotnet\savalan\Savalan.DataAccess\bin\Debug\netstandard2.0\Savalan.DataAccess.deps.json
+E:\personal\dotnet\savalan\Savalan.DataAccess\bin\Debug\netstandard2.0\Savalan.DataAccess.dll
+E:\personal\dotnet\savalan\Savalan.DataAccess\bin\Debug\netstandard2.0\Savalan.DataAccess.pdb
+E:\personal\dotnet\savalan\Savalan.DataAccess\obj\Debug\netstandard2.0\Savalan.DataAccess.csprojAssemblyReference.cache
+E:\personal\dotnet\savalan\Savalan.DataAccess\obj\Debug\netstandard2.0\Savalan.DataAccess.AssemblyInfoInputs.cache
+E:\personal\dotnet\savalan\Savalan.DataAccess\obj\Debug\netstandard2.0\Savalan.DataAccess.AssemblyInfo.cs
+E:\personal\dotnet\savalan\Savalan.DataAccess\obj\Debug\netstandard2.0\Savalan.DataAccess.dll
+E:\personal\dotnet\savalan\Savalan.DataAccess\obj\Debug\netstandard2.0\Savalan.DataAccess.pdb

@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "Savalan.DataAccess"
+		},
+		{
+			"path": "Savalan.WebSample"
+		},
+		{
+			"path": "Savalan.Tests"
+		}
+	],
+	"settings": {
+		"dotnet-test-explorer.testProjectPath": ".\\Savalan.Tests.csproj"
+	}
+}
