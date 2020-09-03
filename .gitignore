@@ -1,1 +1,3 @@
-/Savalan.DataAccess/bin/**
+bin/
+obj/
+.vs/
