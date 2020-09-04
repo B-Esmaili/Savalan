@@ -8,6 +8,15 @@
 		},
 		{
 			"path": "Savalan.Tests"
+		},
+		{
+			"path": "Savalan.Core"
+		},
+		{
+			"path": "Savalan.Web"
+		},
+		{
+			"path": "Savalan.Plugins"
 		}
 	],
 	"settings": {

@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Savalan.DataAccess\Savalan.DataAccess.csproj" />
+    <ProjectReference Include="..\Savalan.Web\Savalan.Web.csproj" />
   </ItemGroup> 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>

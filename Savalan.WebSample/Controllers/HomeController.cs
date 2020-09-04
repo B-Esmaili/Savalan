@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Savalan.WebSample.Models;
 using Savalan.DataAccess;
+using System.Reflection;
 
 namespace Savalan.WebSample.Controllers
 {
@@ -16,12 +17,16 @@ namespace Savalan.WebSample.Controllers
 
         public HomeController(ILogger<HomeController> logger)
         {
+            
             _logger = logger;
         }
 
         public string Index()
-        {
-            Class1 c = new  Class1();
+        { 
+            
+
+            
+             Class1 c = new  Class1();
             return "adsad";
         }
 
