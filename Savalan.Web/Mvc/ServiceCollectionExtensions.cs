@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using McMaster.NETCore.Plugins;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
@@ -115,7 +116,11 @@ namespace Savalan.Web.Mvc
 
         private static Assembly LoadPluginFromPath(string assemblyPath)
         {
-            throw new NotImplementedException();
+             var plugin = PluginLoader.CreateFromAssemblyFile(
+                assemblyPath,  
+                config =>
+                    // this ensures that the version of MVC is shared between this app and the plugin
+                    config.PreferSharedTypes = true);
         }
 
         private static void ConfigureApplicationPartManager(IMvcCoreBuilder mvcBuilder, IEnumerable<Assembly> assemblies)
