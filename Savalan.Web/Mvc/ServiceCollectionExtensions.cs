@@ -105,7 +105,15 @@ namespace Savalan.Web.Mvc
 
             var mvcBuilder = services.AddMvcCore();
 
-            ConfigureApplicationPartManager(mvcBuilder, pluginAssemblyPaths.Select(LoadPluginFromPath));
+            if (pluginAssemblyPaths != null && pluginAssemblyPaths.Any())
+            {
+                ConfigureApplicationPartManager(mvcBuilder, pluginAssemblyPaths, savalanSetupOptions);
+            }
+
+            if (savalanSetupOptions != null)
+            {
+                services.Configure<SavalanWebOptions>(savalanSetupOptions);
+            }
 
             if (_mvcSetupAction != null)
             {
@@ -114,20 +122,50 @@ namespace Savalan.Web.Mvc
             return services;
         }
 
-        private static Assembly LoadPluginFromPath(string assemblyPath)
-        {
-             var plugin = PluginLoader.CreateFromAssemblyFile(
-                assemblyPath,  
-                config =>
-                    // this ensures that the version of MVC is shared between this app and the plugin
-                    config.PreferSharedTypes = true);
-        }
 
-        private static void ConfigureApplicationPartManager(IMvcCoreBuilder mvcBuilder, IEnumerable<Assembly> assemblies)
+
+        private static void ConfigureApplicationPartManager(
+            IMvcCoreBuilder mvcBuilder,
+            IEnumerable<string> assemblies,
+            Action<SavalanWebOptions> savalanSetupOptions = null)
         {
+
             mvcBuilder.ConfigureApplicationPartManager((apm) =>
             {
-                assemblies.ToList().ForEach(asm => apm.ApplicationParts.Add(new AssemblyPart(asm)));
+                foreach (string asmPath in assemblies)
+                {
+                    var plugin = PluginLoader.CreateFromAssemblyFile(
+                    asmPath,
+                    config =>
+                    {
+                        // this ensures that the version of MVC is shared between this app and the plugin
+                        config.PreferSharedTypes = true;
+                        config.EnableHotReload = true;
+                        config.IsUnloadable = true;
+
+                    });
+
+                    var pluginAssembly = plugin.LoadDefaultAssembly();
+
+                    // This loads MVC application parts from plugin assemblies
+                    var partFactory = ApplicationPartFactory.GetApplicationPartFactory(pluginAssembly);
+                    foreach (var part in partFactory.GetApplicationParts(pluginAssembly))
+                    {
+                        mvcBuilder.PartManager.ApplicationParts.Add(part);
+                    }
+
+                    // This piece finds and loads related parts, such as MvcAppPlugin1.Views.dll.
+                    var relatedAssembliesAttrs = pluginAssembly.GetCustomAttributes<RelatedAssemblyAttribute>();
+                    foreach (var attr in relatedAssembliesAttrs)
+                    {
+                        var assembly = plugin.LoadAssembly(attr.AssemblyFileName);
+                        partFactory = ApplicationPartFactory.GetApplicationPartFactory(assembly);
+                        foreach (var part in partFactory.GetApplicationParts(assembly))
+                        {
+                            mvcBuilder.PartManager.ApplicationParts.Add(part);
+                        }
+                    }
+                }
             });
         }
     }
